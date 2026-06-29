@@ -1,0 +1,26 @@
+{
+  "id": "hello-world-esp32c3",
+  "name": "Hello World — ESP32-C3",
+  "description": "Basic serial hello-world demo for ESP32-C3",
+  "device": "esp32c3",
+  "firmware": "assets/firmware/hello-world-esp32c3/firmware.bin",
+  "flashOffset": "0x0",
+  "baud": 115200,
+  "tests": [
+    {
+      "id": "boot",
+      "name": "Boot check",
+      "type": "serial_expect",
+      "pattern": "Hello, World!",
+      "timeoutMs": 5000
+    },
+    {
+      "id": "ping",
+      "name": "Serial ping",
+      "type": "serial_send_expect",
+      "send": "PING\n",
+      "pattern": "PONG",
+      "timeoutMs": 2000
+    }
+  ]
+}
