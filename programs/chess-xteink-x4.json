@@ -1,0 +1,33 @@
+{
+  "id": "chess-xteink-x4",
+  "name": "Chess — XTEINK X4",
+  "description": "Minimax chess engine for XTEINK X4 e-ink display (ESP32-C3)",
+  "device": "esp32c3",
+  "firmware": "assets/firmware/chess-xteink/firmware.bin",
+  "flashOffset": "0x0",
+  "baud": 460800,
+  "tests": [
+    {
+      "id": "boot",
+      "name": "Boot check",
+      "type": "serial_expect",
+      "pattern": "NomaChess ready",
+      "timeoutMs": 5000
+    },
+    {
+      "id": "display_init",
+      "name": "Display init",
+      "type": "serial_expect",
+      "pattern": "EPD init OK",
+      "timeoutMs": 8000
+    },
+    {
+      "id": "ping",
+      "name": "Serial ping",
+      "type": "serial_send_expect",
+      "send": "PING\n",
+      "pattern": "PONG",
+      "timeoutMs": 2000
+    }
+  ]
+}

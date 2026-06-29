@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Noma·Flash — ESP32 Browser Flasher</title>
+  <meta name="description" content="Browser-based ESP32 flasher and post-flash test runner. No drivers, no installs." />
+  <link rel="stylesheet" href="assets/css/nomaflash.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo" aria-label="NomaFlash home">Noma<span class="dot">·</span>Flash</a>
+    <a href="https://github.com/gypsytreasure/nomaflash" class="nav-link" target="_blank" rel="noopener">
+      GitHub ↗
+    </a>
+  </nav>
+
+  <!-- COMPAT BANNER -->
+  <div id="compat-banner" role="alert" aria-live="assertive">
+    ⚠ Web Serial API required. Use Chrome or Edge 89+ over HTTPS.
+  </div>
+
+  <main>
+
+    <!-- PROGRAM SELECTOR -->
+    <section id="program-selector" aria-labelledby="programs-title">
+      <h2 class="section-title" id="programs-title">Programs</h2>
+      <div class="program-grid" id="program-grid" role="list">
+        <div class="empty-state">Loading programs…</div>
+      </div>
+    </section>
+
+    <!-- FLASH PANEL -->
+    <section id="flash-panel" aria-labelledby="flash-title">
+      <h2 class="section-title" id="flash-title">Flash</h2>
+
+      <div class="flash-controls">
+        <div class="control-group">
+          <label class="control-label" for="device-select">Device</label>
+          <select id="device-select" aria-label="Target device">
+            <option value="esp32c3">ESP32-C3</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="baud-select">Baud rate</label>
+          <select id="baud-select" aria-label="Baud rate">
+            <option value="460800" selected>460800</option>
+            <option value="921600">921600</option>
+            <option value="230400">230400</option>
+            <option value="115200">115200</option>
+          </select>
+        </div>
+        <button id="btn-flash" class="btn btn-primary" disabled>
+          ▶ Connect &amp; Flash
+        </button>
+        <button id="btn-abort" class="btn btn-danger" disabled>
+          ⬛ Abort
+        </button>
+      </div>
+
+      <div class="progress-wrap" aria-label="Flash progress">
+        <div class="progress-label">
+          <span id="progress-label-text">Select a program to begin</span>
+          <span id="progress-pct">—</span>
+        </div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="progress-bar-track">
+          <div class="progress-bar-fill" id="progress-bar"></div>
+        </div>
+      </div>
+
+      <div
+        class="terminal"
+        id="terminal"
+        role="log"
+        aria-live="polite"
+        aria-label="Serial terminal output"
+        tabindex="0"
+      >
+        <p class="terminal-line dim">> NomaFlash ready. Select a program and click Connect &amp; Flash.</p>
+      </div>
+    </section>
+
+    <!-- TEST PANEL -->
+    <section id="test-panel" aria-labelledby="tests-title">
+      <div class="test-panel-header">
+        <h2 class="section-title" id="tests-title" style="margin-bottom:0">Tests</h2>
+        <div style="display:flex;gap:0.5rem">
+          <button id="btn-run-tests" class="btn btn-primary" disabled>▶ Run Tests</button>
+          <button id="btn-copy-results" class="btn btn-ghost" disabled>📋 Copy</button>
+        </div>
+      </div>
+
+      <div class="test-table-wrap">
+        <table id="test-table" aria-label="Test results">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Test</th>
+              <th scope="col">Result</th>
+              <th scope="col">Duration</th>
+            </tr>
+          </thead>
+          <tbody id="test-tbody">
+            <tr><td colspan="4" class="empty-state">No tests — select a program first.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- esptool-js from CDN -->
+  <script src="https://unpkg.com/esptool-js@0.4.3/bundle.js"></script>
+
+  <!-- App modules -->
+  <script src="assets/js/devices/esp32c3.js"></script>
+  <script src="assets/js/devices/xteink-x4.js"></script>
+  <script src="assets/js/flasher.js"></script>
+  <script src="assets/js/tester.js"></script>
+  <script src="assets/js/app.js"></script>
+
+</body>
+</html>
